@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面试员工：信号检测论实验</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="setupPage" class="page setup-page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Signal Detection Theory Lab</p>
+          <h1>面试员工：信号检测论交互实验</h1>
+          <p class="lead">
+            先阅读指导语并设置实验参数。开始后页面会切换到正式任务，只保留当前候选人和判断按钮。
+          </p>
+        </div>
+      </section>
+
+      <section class="setup-grid">
+        <section class="panel instruction-panel">
+          <h2>指导语</h2>
+          <div class="instruction-list">
+            <article>
+              <span>1</span>
+              <p>你将扮演招聘面试官，每一题看到一位候选人的四类线索。</p>
+            </article>
+            <article>
+              <span>2</span>
+              <p>候选人真实状态分为两类：高绩效员工为信号 S，不适合岗位为噪音 N。</p>
+            </article>
+            <article>
+              <span>3</span>
+              <p>请在倒计时内判断“录用”或“不录用”。超时会自动记为“不录用”。</p>
+            </article>
+            <article>
+              <span>4</span>
+              <p>结束后系统会计算 H、M、FA、CR、P(Hit)、P(FA)、d'、c 和准确率。</p>
+            </article>
+          </div>
+
+          <div class="legend compact">
+            <h3>结果含义</h3>
+            <dl>
+              <dt>H 命中</dt><dd>高绩效候选人被录用</dd>
+              <dt>M 漏报</dt><dd>高绩效候选人被拒绝</dd>
+              <dt>FA 虚报</dt><dd>普通候选人被误录用</dd>
+              <dt>CR 正确拒绝</dt><dd>普通候选人被拒绝</dd>
+            </dl>
+          </div>
+        </section>
+
+        <section class="panel settings-panel">
+          <h2>参数设置</h2>
+          <p class="quiet">
+            P(S) 控制高绩效候选人的出现比例；d' 控制信号与噪音的可区分度，数值越低越难。
+          </p>
+
+          <label class="control">
+            <span>信号先验概率 P(S)</span>
+            <input id="signalProbability" type="range" min="20" max="80" step="5" value="50">
+            <output id="signalProbabilityValue">50%</output>
+          </label>
+
+          <label class="control">
+            <span>难度 d'（数值越低越难）</span>
+            <input id="difficulty" type="range" min="0.6" max="2.6" step="0.1" value="1.4">
+            <output id="difficultyValue">1.4</output>
+          </label>
+
+          <label class="control">
+            <span>每题限时</span>
+            <select id="timeLimit">
+              <option value="10">10 秒</option>
+              <option value="12" selected>12 秒</option>
+              <option value="15">15 秒</option>
+              <option value="20">20 秒</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span>总试次数</span>
+            <select id="trialCount">
+              <option value="20">20 次</option>
+              <option value="24" selected>24 次</option>
+              <option value="32">32 次</option>
+              <option value="40">40 次</option>
+            </select>
+          </label>
+
+          <button id="startButton" class="primary-button" type="button">开始正式任务</button>
+          <button id="resetButton" class="ghost-button" type="button">恢复默认设置</button>
+        </section>
+
+        <section class="panel visualization-panel">
+          <div class="visualization-head">
+            <div>
+              <h2>交互式概念可视化</h2>
+              <p class="quiet">
+                d' 表示辨别力。在这张概念图中，它用来表示 S 与 N 两类证据分布的可分离程度；
+                在实验结果中，d' 是个体在当前线索条件下区分信号和噪音的能力估计，不等同于真实能力差距。
+              </p>
+            </div>
+            <div class="visualization-controls">
+              <label class="concept-control distance-control">
+                <span>分布距离 d'</span>
+                <input id="conceptDistance" type="range" min="0.6" max="2.6" step="0.1" value="1.4">
+                <output id="conceptDistanceValue">1.4</output>
+              </label>
+              <label class="concept-control criterion-control">
+                <span>判断标准 c</span>
+                <input id="criterionDemo" type="range" min="-1.8" max="1.8" step="0.1" value="0">
+                <output id="criterionDemoValue">0.0</output>
+              </label>
+            </div>
+          </div>
+          <canvas id="conceptCanvas" width="1400" height="620" aria-label="信号检测论分布和 ROC 曲线可视化"></canvas>
+          <div class="concept-notes">
+            <span><b>蓝色</b>：噪音 N</span>
+            <span><b>绿色</b>：信号 S</span>
+            <span><b>d'</b>：辨别力指标；受线索质量、任务难度和个体差异影响</span>
+            <span><b>红线</b>：当前判断标准 c</span>
+            <span><b>黑点</b>：当前 c 对应的 ROC 位置</span>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <section id="taskPage" class="page task-page hidden">
+      <header class="task-topbar">
+        <div>
+          <p class="eyebrow">Interview Task</p>
+          <h1>判断当前候选人</h1>
+        </div>
+        <button id="backToSetupButton" class="ghost-button compact-button" type="button">返回设置</button>
+      </header>
+
+      <div class="score-strip task-stats" aria-label="实验实时统计">
+        <div><span id="liveTrial">0</span><small>当前试次</small></div>
+        <div><span id="liveHit">0</span><small>命中 H</small></div>
+        <div><span id="liveMiss">0</span><small>漏报 M</small></div>
+        <div><span id="liveFa">0</span><small>虚报 FA</small></div>
+        <div><span id="liveCr">0</span><small>正确拒绝 CR</small></div>
+      </div>
+
+      <section class="panel experiment-panel">
+        <div class="stage-header">
+          <div>
+            <h2 id="stageTitle">等待开始</h2>
+            <p id="stageSubtitle">设置参数后点击开始，系统会随机生成候选人。</p>
+          </div>
+          <div class="timer" aria-label="剩余时间">
+            <span id="timerValue">--</span>
+            <small>秒</small>
+          </div>
+        </div>
+
+        <div class="task-workspace">
+          <div class="scene-column">
+            <canvas id="interviewCanvas" width="980" height="520" aria-label="面试场景画布"></canvas>
+            <div id="feedback" class="feedback" aria-live="polite">
+              面试开始后，请在倒计时内做出判断。
+            </div>
+          </div>
+
+          <aside class="decision-column">
+            <div class="candidate-info">
+              <h3 id="candidateName">候选人档案</h3>
+              <p id="candidateRole">尚未开始</p>
+            </div>
+            <div id="cueGrid" class="cue-grid" aria-live="polite"></div>
+
+            <div class="decision-bar">
+              <button id="rejectButton" class="decision reject" type="button" disabled>不录用</button>
+              <button id="hireButton" class="decision hire" type="button" disabled>录用</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </section>
+
+    <section id="resultsPanel" class="page panel results-panel hidden">
+      <div class="results-heading">
+        <div>
+          <p class="eyebrow">Experiment Results</p>
+          <h2>SDT 结果计算</h2>
+        </div>
+        <div class="result-actions">
+          <button id="exportButton" class="ghost-button compact-button" type="button">导出 CSV</button>
+          <button id="restartButton" class="ghost-button compact-button" type="button">调整参数</button>
+          <button id="practiceAgainButton" class="primary-button compact-button" type="button">再次开始</button>
+        </div>
+      </div>
+
+      <div class="metric-grid">
+        <div><span id="resultHit">0</span><small>H 命中</small></div>
+        <div><span id="resultMiss">0</span><small>M 漏报</small></div>
+        <div><span id="resultFa">0</span><small>FA 虚报</small></div>
+        <div><span id="resultCr">0</span><small>CR 正确拒绝</small></div>
+        <div><span id="resultHitRate">0%</span><small>P(Hit)</small></div>
+        <div><span id="resultFaRate">0%</span><small>P(FA)</small></div>
+        <div><span id="resultDPrime">0.00</span><small>d'</small></div>
+        <div><span id="resultCriterion">0.00</span><small>c</small></div>
+        <div><span id="resultAccuracy">0%</span><small>准确率</small></div>
+      </div>
+
+      <div class="summary">
+        <h3>解释</h3>
+        <p id="resultSummary">完成实验后显示。</p>
+      </div>
+
+      <div class="formula">
+        <h3>计算方式</h3>
+        <p>
+          P(Hit)=H/(H+M)，P(FA)=FA/(FA+CR)。为避免 0 或 1 导致 z 分数无穷大，
+          本实验使用 0.5 校正：P(Hit)=(H+0.5)/(H+M+1)，P(FA)=(FA+0.5)/(FA+CR+1)。
+          d'=z(P(Hit))-z(P(FA))，c=-0.5×[z(P(Hit))+z(P(FA))]。
+        </p>
+      </div>
+
+      <div class="result-visualization">
+        <div class="visualization-head">
+          <div>
+            <h3>概念对照图</h3>
+            <p class="quiet">
+              d' 是辨别力指标，不是候选人真实差距；它会受到线索质量、任务难度和个体判断差异影响。
+            </p>
+          </div>
+          <div class="visualization-controls">
+            <label class="concept-control distance-control">
+              <span>分布距离 d'</span>
+              <input id="resultConceptDistance" type="range" min="0.6" max="2.6" step="0.1" value="1.4">
+              <output id="resultConceptDistanceValue">1.4</output>
+            </label>
+            <label class="concept-control criterion-control">
+              <span>判断标准 c</span>
+              <input id="resultCriterionDemo" type="range" min="-1.8" max="1.8" step="0.1" value="0">
+              <output id="resultCriterionDemoValue">0.0</output>
+            </label>
+          </div>
+        </div>
+        <canvas id="resultConceptCanvas" width="1400" height="620" aria-label="任务结束后的信号检测论分布和 ROC 曲线可视化"></canvas>
+        <div class="concept-notes">
+          <span><b>蓝色</b>：噪音 N</span>
+          <span><b>绿色</b>：信号 S</span>
+          <span><b>d'</b>：辨别力指标；受线索质量、任务难度和个体差异影响</span>
+          <span><b>红线</b>：当前判断标准 c</span>
+          <span><b>黑点</b>：当前 c 对应的 ROC 位置</span>
+        </div>
+      </div>
+
+      <div class="leaderboard">
+        <div class="leaderboard-head">
+          <h3>多局数据对比</h3>
+          <button id="clearLeaderboardButton" class="ghost-button compact-button" type="button">清空记录</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>排名</th>
+                <th>时间</th>
+                <th>准确率</th>
+                <th>d'</th>
+                <th>c</th>
+                <th>H/M/FA/CR</th>
+                <th>参数</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
