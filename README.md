@@ -1,4 +1,4 @@
-作业二 GitHub Pages 参与链接（启用后生效）：[太空救援](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/)
+作业二 GitHub Pages 参与链接：[太空救援](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/)
 
 # 工程心理学课程作业
 
@@ -9,7 +9,7 @@
 - 公开项目码：`36UUQV`；下载密钥不在仓库中。
 - 搜索 160 次、Flanker 120 次，最长 15 分钟；默认测试模式，正式收数须切换“正式实验”。
 - 本次提交保存收数前设计与实现。此前为开发/预试；正式收数时间由作者据实记录。
-- Pages 设置：仓库 Public，Settings → Pages → Deploy from a branch → main → /docs → Save。当前提交只完成文件准备，尚未验证 Pages 已启用。
+- Pages 设置：仓库 Public，Settings → Pages → Deploy from a branch → main → /docs → Save。已于 2026-11-07 验证公开访问，首页和全部实验资源均返回成功并与本地版本一致。
 - 原作业一的根目录网页和文件保留如下。
 
 ---
