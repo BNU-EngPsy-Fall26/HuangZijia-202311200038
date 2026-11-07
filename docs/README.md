@@ -249,3 +249,11 @@ GitHub Pages 参与链接：[太空救援](https://bnu-engpsy-fall26.github.io/H
 ## 课程仓库发布状态
 
 已提交到 BNU-EngPsy-Fall26/HuangZijia-202311200038 的 main 分支，提交 741187a5092d18f98e30910c1d4be721cc4d77fb。实验位于 docs/，根目录原作业一保留。仓库已为 Public，GitHub Pages 已启用。2026-11-07 验证首页、app.js、design.js、style.css 均返回 HTTP 200，且与本地文件完全一致。项目码36UUQV和课程上传接口保持不变。此检查不包含真实被试提交，建议上线后用测试模式核对后台入库。
+
+## 独立交互式模型展示
+
+[打开注意模型实验台](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/model/)；离线可双击 `model/index.html`。建议仅在完成正式实验后查看，不在实验入口添加引导，避免污染正在收集的数据。
+
+展示页独立使用 model/index.html、model/model.css 和 model/model.js，无数据请求、存储或上传。搜索部分依据 Posner 等（1980）的注意定向与收益/成本思路；Flanker 部分依据 Eriksen 与 Eriksen（1974）的反应兼容性与冲突预期线索研究。公式为本项目自行设定的教学近似，不是原论文模型复现，也没有拟合当前数据。页面注明全部参数、公式、原始文献链接和解释边界，可通过参数变化观察零效应或反向预测。图中所有数值均为模拟预测，不是被试结果。
+
+当前收数脚本、刺激生成、实验入口和样式均未修改，设计版本及试次数不变。新增页面不包含全班数据比较。
