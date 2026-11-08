@@ -1,6 +1,6 @@
 GitHub Pages 参与链接：[太空救援](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/)
 
-最新分析：[研究结果与敏感性分析](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/results/) · [完整报告](results/report.md)。冻结于2026-11-08：调整口径搜索14人、Flanker14人；两项改进未获明确支持。最新后台完整Flanker经研究者确认为新增独立被试，已纳入；另有一份30次未完成记录未纳入。
+最新分析：[研究结果与敏感性分析](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/results/) · [完整研究报告：背景、设计、结果与反思](results/report.md)。冻结于2026-11-08：调整口径搜索14人、Flanker14人；两项改进未获明确支持。最新后台完整Flanker经研究者确认为新增独立被试，已纳入；另有一份30次未完成记录未纳入。
 
 # 太空救援：提示的帮助与代价
 
@@ -220,6 +220,8 @@ GitHub Pages 参与链接：[太空救援](https://bnu-engpsy-fall26.github.io/H
 原文对照以“原范式与本任务的差别、经典效应方向、效应估计、局限”组织。先阅读参考论文相关方法/结果，再引用具体数字；未取得可比原文数字时只做定性比较。不得把模拟测试日志当作实验结果。
 
 ## 9. 最新分析与阅读入口
+
+报告新增研究背景、两项改进的理论推导、控制变量与设计取舍、游戏化边界和开发调整说明；主要预测仍为原S-H1／F-H2。补写说明不冒充收数前注册，也不根据不显著结果改写研究目的。
 
 - [研究结果与敏感性分析](results/index.html) · [完整报告及原文全文对照](results/report.md)
 - [独立交互模型](model/index.html) · [全班参考](model/comparison.html)
