@@ -92,3 +92,13 @@ assert.equal(vm.runInContext("personalReportData('flanker').eligible",c),false);
 assert(vm.runInContext('personalReportHTML()',c).includes('未完整完成'));
 vm.runInContext("S.data.flanker=[]",c);assert.equal(vm.runInContext("personalReportData('flanker').accuracy",c),null);
 console.log('PASS: report quality metrics, empty/partial sessions, test label, and post-session-only links.');
+// Integrated learning: model changes do not mutate measurements, missing != zero.
+vm.runInContext('S.ended=false',c);assert.equal(vm.runInContext('learningHTML()',c),'');
+vm.runInContext(`S.ended=true;S.completed={visual_search:'complete',flanker:'complete'};for(const exp of ['visual_search','flanker'])S.data[exp]=LabDesign.plan(exp,99).map(r=>({...r,rt_ms:500,correct:true,timeout:false,visibility_lost:false,interrupted:false,session_incomplete:false}));bindLearning()`,c);
+const saved=vm.runInContext('JSON.stringify(S.data)',c);
+assert(element('learn-search').innerHTML.includes('500.0 ms'));
+assert.equal(vm.runInContext('learningPredictions({w:0,g:1,d:1,k:0,qg:0,qp:0,h:0}).search[1]',c),800);
+element('learn-w').value=0;vm.runInContext('updateLearning()',c);assert.equal(vm.runInContext('JSON.stringify(S.data)',c),saved);
+assert.equal(vm.runInContext('learningEffects([null,1,2,3,4],[1,2,3,4,5,6]).search[0]',c),null);
+vm.runInContext("S.completed.flanker='incomplete';updateLearning()",c);assert(element('learn-flanker').innerHTML.includes('暂不将个人数据'));
+console.log('PASS: integrated learning predictions, missing data, after-session gate and immutable personal results.');
