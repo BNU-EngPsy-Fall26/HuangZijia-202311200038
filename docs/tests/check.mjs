@@ -40,7 +40,7 @@ const row=await trialPromise;assert.equal(row.correct,true);assert(row.rt_ms>0);
 console.log('PASS: syntax; 50 seeds; all condition quotas, positions and targets; mocked upload success/failure/duplicate guard; local mode; timed response and persistence. No real upload performed.');
 vm.runInContext("S.data.flanker=[];S.ended=false;S.completed={visual_search:'complete'}",c);
 const interrupted=vm.runInContext("trial(LabDesign.plan('flanker',1)[0],'flanker','formal',0,0)",c);
-await new Promise(r=>setTimeout(r,1100));vm.runInContext("finish('time_limit')",c);const stopped=await interrupted;await new Promise(r=>setTimeout(r,25));assert.equal(stopped.interrupted,true);assert.equal(vm.runInContext('S.completed.flanker',c),'incomplete');assert.equal(vm.runInContext('S.data.flanker[0].session_incomplete',c),true);assert.equal(vm.runInContext('S.completed.visual_search',c),'complete');console.log('PASS: limit interrupts active trial, preserves partial data, retains completed experiment.');
+await new Promise(r=>setTimeout(r,1100));vm.runInContext("finish('withdrawn')",c);const stopped=await interrupted;await new Promise(r=>setTimeout(r,25));assert.equal(stopped.interrupted,true);assert.equal(vm.runInContext('S.completed.flanker',c),'incomplete');assert.equal(vm.runInContext('S.data.flanker[0].session_incomplete',c),true);assert.equal(vm.runInContext('S.completed.visual_search',c),'complete');console.log('PASS: voluntary exit interrupts active trial, preserves partial data, retains completed experiment.');
 
 vm.runInContext('S.ended=false',c);
 for(const mode of ['brief','persistent']){
@@ -102,3 +102,5 @@ element('learn-w').value=0;vm.runInContext('updateLearning()',c);assert.equal(vm
 assert.equal(vm.runInContext('learningEffects([null,1,2,3,4],[1,2,3,4,5,6]).search[0]',c),null);
 vm.runInContext("S.completed.flanker='incomplete';updateLearning()",c);assert(element('learn-flanker').innerHTML.includes('暂不将个人数据'));
 console.log('PASS: integrated learning predictions, missing data, after-session gate and immutable personal results.');
+
+assert(!app.includes('const remaining=900'));assert(!app.includes("finish('time_limit')"));assert(app.includes('no-session-limit-2026-11-08'));assert(app.includes('报告与模型学习不限时'));console.log('PASS: no total-session automatic timeout; timing policy recorded and report reading unlimited.');
