@@ -7,7 +7,7 @@ assert stat([1,1,1],True)['p']==.25
 assert metrics([10,8,14,9,13],True)['S-H1']==1
 assert metrics([10,13,10,15,12,14],False)['F-H2']==3
 x=json.loads((root/'results/analysis.json').read_text())
-for k,ns in {'adjusted':(13,12),'original_cells':(13,11),'no_mode_exceptions':(9,8),'strict':(9,7)}.items():
+for k,ns in {'adjusted':(14,13),'original_cells':(14,12),'no_mode_exceptions':(10,9),'strict':(10,8)}.items():
  s=x['scenarios'][k];assert (s['search']['n'],s['flanker']['n'])==ns
  for t,primary in [('search','S-H1'),('flanker','F-H2')]:
   v=s[t]['effects'][primary];assert 0<=v['p']<=v['p_holm']<=1

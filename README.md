@@ -9,7 +9,7 @@
 - [全班数据独立比较页](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/model/comparison.html)（真实匿名汇总；仅 Flanker 近似参照，非改进胜负检验）。
 - 2026-11-08：实验结束页自动显示个人报告，可下载报告，并在新标签页打开理论模型及全班比较；比较数据仍为标注日期的历史快照。
 - 评分要求与当前不足见 docs/README.md 末尾；取消整场限时后的新记录带 timing_policy 标记，单题反应时限不变。
-- [现有数据正式分析与敏感性分析](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/results/)：调整口径搜索13人、Flanker12人；两项改进未获明确支持。原规则结果、原文对照与事后调整均在报告中。
+- [现有数据正式分析与敏感性分析](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/results/)：调整口径搜索14人、Flanker13人；两项改进未获明确支持。原规则结果、原文对照与事后调整均在报告中。
 - 本地运行：双击 `docs/index.html`。
 - 公开项目码：`36UUQV`；下载密钥不在仓库中。
 - 搜索 160 次、Flanker 120 次，不设整场总时限（2026-11-08起），报告可不限时阅读；默认测试模式，正式收数须切换“正式实验”。
