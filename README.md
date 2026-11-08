@@ -7,6 +7,7 @@
 - [完整实验方案与运行说明](docs/README.md)
 - [独立交互式注意模型展示](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/model/)（请在完成实验后查看；全部图表为理论模拟，不是被试数据）。
 - [全班数据独立比较页](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/model/comparison.html)（真实匿名汇总；仅 Flanker 近似参照，非改进胜负检验）。
+- 2026-11-08：实验结束页自动显示个人报告，可下载报告，并在新标签页打开理论模型及全班比较；比较数据仍为标注日期的历史快照。
 - 本地运行：双击 `docs/index.html`。
 - 公开项目码：`36UUQV`；下载密钥不在仓库中。
 - 搜索 160 次、Flanker 120 次，最长 15 分钟；默认测试模式，正式收数须切换“正式实验”。

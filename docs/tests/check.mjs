@@ -78,3 +78,17 @@ assert.equal(vm.runInContext("mapText('flanker')[0]",c),'← 向左');
 assert(vm.runInContext("missionHUD('visual_search',80,160)",c).includes('3 / 4'));
 assert.equal(row.stage,1);assert.equal(row.ship_color,'cyan');
 console.log('PASS: four-stage mission progress, fixed compatible flight keys, cosmetic color recording, v3 upload names.');
+
+// Post-session report uses the same quality thresholds and is hidden before ending.
+vm.runInContext("S.ended=false",c);
+assert.equal(vm.runInContext('personalReportHTML()',c),'');assert.equal(vm.runInContext('postExperimentLinks()',c),'');
+vm.runInContext(`S.ended=true;S.mode='test';S.participant='TEST';S.completed={visual_search:'complete',flanker:'complete'};for(const exp of ['visual_search','flanker'])S.data[exp]=LabDesign.plan(exp,77).map(r=>({...r,rt_ms:400,correct:true,timeout:false,visibility_lost:false,interrupted:false,session_incomplete:false}));`,c);
+assert.equal(vm.runInContext("personalReportData('visual_search').eligible",c),true);
+assert.equal(vm.runInContext("personalReportData('flanker').rt",c),400);
+assert(vm.runInContext('personalReportHTML()',c).includes('测试模式'));
+assert(vm.runInContext('postExperimentLinks()',c).includes('target="_blank"'));
+vm.runInContext("S.data.flanker=S.data.flanker.slice(0,3);S.completed.flanker='incomplete'",c);
+assert.equal(vm.runInContext("personalReportData('flanker').eligible",c),false);
+assert(vm.runInContext('personalReportHTML()',c).includes('未完整完成'));
+vm.runInContext("S.data.flanker=[]",c);assert.equal(vm.runInContext("personalReportData('flanker').accuracy",c),null);
+console.log('PASS: report quality metrics, empty/partial sessions, test label, and post-session-only links.');
