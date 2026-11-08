@@ -3,7 +3,7 @@
   "seed": 20261107,
   "bootstrap_resamples": 10000,
   "input_sha256": "a30a0492e5f25eb43ed9a34ddd4601a079dadb344912826a85d2c2e3cae29c1f",
-  "scope": "原始CSV及8份已核验备份；13个完成搜索的独立参与者，12个完成Flanker；另保留P99不完整任务。新后台未知会话不自动纳入。",
+  "scope": "原始CSV及8份已核验备份；13个完成搜索的独立参与者，12个完成Flanker；另保留一份仅1次的不完整搜索任务。新后台未知会话不自动纳入。",
   "scenarios": {
     "adjusted": {
       "search": {
