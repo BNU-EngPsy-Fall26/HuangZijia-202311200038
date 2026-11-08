@@ -9,11 +9,11 @@
 - [全班数据独立比较页](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/model/comparison.html)（真实匿名汇总；仅 Flanker 近似参照，非改进胜负检验）。
 - 2026-11-08：实验结束页自动显示个人报告，可下载报告，并在新标签页打开理论模型及全班比较；比较数据仍为标注日期的历史快照。
 - 评分要求与当前不足见 docs/README.md 末尾；取消整场限时后的新记录带 timing_policy 标记，单题反应时限不变。
-- [现有数据正式分析与敏感性分析](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/results/)：调整口径搜索14人、Flanker13人；两项改进未获明确支持。原规则结果、原文对照与事后调整均在报告中。
+- [现有数据正式分析与敏感性分析](https://bnu-engpsy-fall26.github.io/HuangZijia-202311200038/results/)：调整口径搜索14人、Flanker14人；两项改进未获明确支持。原规则结果、原文对照与事后调整均在报告中。
 - 本地运行：双击 `docs/index.html`。
 - 公开项目码：`36UUQV`；下载密钥不在仓库中。
 - 搜索 160 次、Flanker 120 次，不设整场总时限（2026-11-08起），报告可不限时阅读；默认测试模式，正式收数须切换“正式实验”。
-- 本次提交保存收数前设计与实现。此前为开发/预试；正式收数时间由作者据实记录。
+- 原设计提交与事后修订时间线、Flanker全文对照及不显著解释见完整报告；本轮已完成解压包真实浏览器检查，验收边界见 [验收记录](docs/results/acceptance.md)。
 - Pages 设置：仓库 Public，Settings → Pages → Deploy from a branch → main → /docs → Save。已于 2026-11-07 验证公开访问，首页和全部实验资源均返回成功并与本地版本一致。
 - 原作业一的根目录网页和文件保留如下。
 
